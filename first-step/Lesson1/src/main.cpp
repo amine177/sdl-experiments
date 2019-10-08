@@ -38,6 +38,25 @@ int main(int argc, char** argv) {
     return 1;
   }
 
+  SDL_Texture* tex = SDL_CreateTextureFromSurface(ren, bmp);
+  SDL_FreeSurface(bmp);
+  if (tex == nullptr) {
+    SDL_DestroyRenderer(ren);
+    SDL_DestroyWindow(win);
+    std::cout << "SDL_CreateTextureFromSurface Error: " 
+      << SDL_GetError() << std::endl;
+    SDL_Quit();
+    return 1;
+  }
+
+  for (int i = 0; i < 3; ++i) {
+    //First clear the renderer
+    SDL_RenderClear(ren);
+    SDL_RenderCopy(ren, tex, NULL, NULL);
+    SDL_RenderPresent(ren);
+    SDL_Delay(1000);
+  }
+
   char dummy;
   std::cout << "Enter any character to quit" << std::endl;
   std::cin >> dummy;
