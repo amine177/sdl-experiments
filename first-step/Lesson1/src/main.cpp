@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SDL2/SDL.h>
+#include "res_path.h"
 
 
 int main(int argc, char** argv) {
@@ -23,6 +24,16 @@ int main(int argc, char** argv) {
     SDL_DestroyWindow(win);
     std::cout << "SDL_CreateRenderer Error: " << SDL_GetError()
       << std::endl;
+    SDL_Quit();
+    return 1;
+  }
+
+  std::string imagePath = getResourcePath("Lesson1") + "cover.bmp";
+  SDL_Surface* bmp = SDL_LoadBMP(imagePath.c_str());
+  if (bmp == nullptr) {
+    SDL_DestroyRenderer(ren);
+    SDL_DestroyWindow(win);
+    std::cout << "SDL_LoadBMP Error: " << SDL_GetError() << std::endl;
     SDL_Quit();
     return 1;
   }
